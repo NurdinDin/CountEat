@@ -1,0 +1,10 @@
+ayam goreng
+bakso
+burger
+gado-gado
+hot_dog
+kentang_goreng
+mie
+pizza
+rendang
+sate

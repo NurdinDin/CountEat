@@ -1,0 +1,42 @@
+<resources>
+
+    <string name="app_name">CountEat</string>
+    <string name="sapa">Hi</string>
+    <string name="insert">Isi tinggi badan dan berat badanmu ya!</string>
+    <string name="insert_desc">Data ini digunakan untuk mengetahui kalori yang dibutuhkan oleh tubuhmu setiap harinya, data dapat dirubah di profilemu, mantap bukan?!?!</string>
+    <string name="calorie_need">Kalor yang kamu butuhkan hari ini : </string>
+    <string name="calorie">2000 kkal</string>
+    <string name="recomen_food">Sarapan rekomendasi hari ini</string>
+    <string name="recomendation">Rekomendasi</string>
+    <string name="scan_opt">Scan makananmu</string>
+    <string name="camera">kamera</string>
+    <string name="gallery">Gallery</string>
+    <string name="profile">Profile</string>
+    <string name="update_profile">Update profilemu</string>
+
+    <string name="predict">Prediksi</string>
+
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="signup">Sign Up</string>
+    <string name="next">Next>></string>
+    <string name="scan">Scan</string>
+    <string name="search">Cari</string>
+    <string name="update">Update</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Nama</string>
+    <string name="tb">Tinggi badan</string>
+    <string name="bb">Berat badan</string>
+    <string name="age">Umur</string>
+    <string name="gender">Jenis Kelamin (pria/wanita)</string>
+    <string name="google">Google</string>
+    <string name="photo_gallery">Pilih dari Gallery</string>
+    <string name="photo_camera">Ambil dengan Kamera</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_scan">Scan</string>
+    <string name="title_eksplor">Eksplor</string>
+    <string name="title_profile">Profile</string>
+    <string name="or_space">Or</string>
+</resources>
