@@ -1,12 +1,17 @@
 package com.dicoding.counteat.ui.main.fragment.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.dicoding.counteat.data.api.ApiConfig
 import com.dicoding.counteat.data.pref.UserModel
 import com.dicoding.counteat.data.repository.AppRepository
 import com.dicoding.counteat.data.response.BMRResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeViewModel(private val repository: AppRepository) : ViewModel() {
 
@@ -15,10 +20,10 @@ class HomeViewModel(private val repository: AppRepository) : ViewModel() {
     }
 
 
-    /*private val _bmrData = MutableLiveData<String>()
+    private val _bmrData = MutableLiveData<String>()
     val bmrData: LiveData<String> get() = _bmrData
 
-    fun getBmr() {
+    /*fun getBmr() {
         viewModelScope.launch {
             repository.getUsername().collect { username ->
                 if (username.isNotEmpty()) {
@@ -45,7 +50,7 @@ class HomeViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun findUser(username: String, bmr: String) {
         _isLoading.value = true
-        /*val client = ApiConfig.getApiService().getBmr(username, bmr)
+        val client = ApiConfig.getApiService().getBmr(username, bmr)
         client.enqueue(object : Callback<BMRResponse> {
             override fun onResponse(call: Call<BMRResponse>, response: Response<BMRResponse>) {
                 _isLoading.value = false
@@ -59,11 +64,7 @@ class HomeViewModel(private val repository: AppRepository) : ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
 
-        })*/
-
-        /*if (bmr != null) {
-            repository.getB
-        }*/
+        })
     }
 
     companion object {

@@ -14,7 +14,6 @@ import com.dicoding.counteat.databinding.FragmentLoginBinding
 import com.dicoding.counteat.ui.Register.TabLayoutActivity
 import com.dicoding.counteat.ui.factory.ViewModelFactory
 import com.dicoding.counteat.ui.insert_tb_bb.TbBbActivity
-import com.dicoding.counteat.ui.main.MainActivity
 
 
 class LoginFragment : Fragment() {
@@ -27,7 +26,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -49,9 +48,6 @@ class LoginFragment : Fragment() {
                                 setTitle("Mantap")
                                 setMessage("Anda berhasil login")
                                 setPositiveButton("Lanjut") { _, _ ->
-                                    /*if (isUserDataComplete(tb, bb, age)) {
-
-                                    }*/
                                     val intent = Intent(requireContext(), TbBbActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     startActivity(intent)
@@ -88,18 +84,6 @@ class LoginFragment : Fragment() {
 
     private fun isUserDataComplete(tb: String, bb: String, age: String) : Boolean {
         return tb.isNotEmpty() && bb.isNotEmpty() && age.isNotEmpty()
-    }
-
-    private fun navigateToMainActivity() {
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
-    }
-
-    private fun navigateToTbBbActivity() {
-        val intent = Intent(requireContext(), TbBbActivity::class.java)
-        startActivity(intent)
     }
 
     private fun showLoading(isLoading:Boolean) {

@@ -67,18 +67,6 @@
         app:layout_constraintStart_toStartOf="@+id/galleryButton"
         app:layout_constraintTop_toBottomOf="@+id/galleryButton" />
 
-    <TextView
-        android:id="@+id/tvPredict"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/predict"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/cameraButton" />
-
     <Button
         android:id="@+id/scanButton"
         style="@style/Widget.AppCompat.Button"

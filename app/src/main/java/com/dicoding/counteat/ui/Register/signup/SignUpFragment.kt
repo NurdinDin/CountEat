@@ -27,7 +27,7 @@ class SignUpFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -68,9 +68,6 @@ class SignUpFragment : Fragment() {
                                 setTitle("Yah gagal!!")
                                 setMessage("Silahkan buat ulang!")
                                 setPositiveButton("Ulangi") { _, _ ->
-                                    /*val intent = Intent(requireContext(), SignUpFragment::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                    startActivity(intent)*/
 
                                 }
                                 create()

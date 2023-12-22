@@ -1,6 +1,6 @@
 package com.dicoding.counteat.ui.main.fragment.Scan
 
-import android.content.Intent
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -9,7 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -21,19 +22,21 @@ import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.IOException
 
 class ScanFragment : Fragment() {
 
     private var _binding: FragmentScanBinding? = null
-    lateinit var bitmap: Bitmap
-    //lateinit var tvPredict: TextView
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    lateinit var btnGallery: Button
+    lateinit var btnScan: Button
+    lateinit var imgView: ImageView
+    lateinit var bitmap: Bitmap
+
     private val binding get() = _binding!!
     private var currentImageUri: Uri? = null
 
-        override fun onCreateView(
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,67 +45,68 @@ class ScanFragment : Fragment() {
         _binding = FragmentScanBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        /*binding.galleryButton.setOnClickListener {
+        var labels = requireActivity().application.assets.open("labels.txt").bufferedReader().readLines()
+        var cal = requireActivity().application.assets.open("calorie.txt").bufferedReader().readLines()
+
+        btnGallery = binding.galleryButton
+        btnScan = binding.scanButton
+        imgView = binding.previewImageView
+
+        var imageProcessor = ImageProcessor.Builder()
+            .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
+            .build()
+
+        binding.galleryButton.setOnClickListener {
             startGallery()
-        }*/
-
-            binding.galleryButton.setOnClickListener {
-                var intent = Intent()
-                intent.setAction(Intent.ACTION_GET_CONTENT)
-                intent.setType("image/*")
-                startActivityForResult(intent, 100)
-            }
-
+        }
         binding.cameraButton.setOnClickListener {
             startCamera()
         }
 
-            var imageProcessor = ImageProcessor.Builder()
-                .add(ResizeOp(224, 224, ResizeOp.ResizeMethod.BILINEAR))
-                .build()
-
-            var labels = requireActivity().application.assets.open("labels.txt").bufferedReader().readLine()
-
         binding.scanButton.setOnClickListener {
+            if (!::bitmap.isInitialized) {
+                Log.e("ScanFragment", "Bitmap not initialized")
+            }
 
             var tensorImage = TensorImage(DataType.FLOAT32)
             tensorImage.load(bitmap)
+
             tensorImage = imageProcessor.process(tensorImage)
 
             val model = FoodClassifierModel.newInstance(requireContext())
-            // Creates inputs for reference.
+
             val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
             inputFeature0.loadBuffer(tensorImage.buffer)
 
-            // Runs model inference and gets result.
             val outputs = model.process(inputFeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer.floatArray
 
-            var maxIdx = 0
+            var maxId = 0
             outputFeature0.forEachIndexed { index, fl ->
-                if (outputFeature0[maxIdx] < fl) {
-                    maxIdx = index
+                if (outputFeature0[maxId] < fl) {
+                    maxId = index
                 }
             }
 
-            binding.tvPredict.setText(labels[maxIdx].toString())
+            val foodLabel = "Nama makanan : " + (labels.getOrNull(maxId) ?: "Tidak ada informasi makanan")
+            val calorieInfo = "Informasi Kalori : " + (cal.getOrNull(maxId) ?: "Tidak ada informasi kalori makanan")
 
-            // Releases model resources if no longer used.
+            val message = "$foodLabel\n$calorieInfo"
+
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("Makanan yang kamu scan:")
+                setMessage(message)
+                setPositiveButton("Ok") { _, _ ->
+
+                }
+                create()
+                show()
+            }
+
             model.close()
-
         }
 
         return root
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 100) {
-            var uri = data?.data
-            bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
-            binding.previewImageView.setImageBitmap(bitmap)
-        }
     }
 
     private fun startGallery() {
@@ -125,8 +129,6 @@ class ScanFragment : Fragment() {
         launcherIntentCamera.launch(currentImageUri)
     }
 
-
-
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
     ) { isSuccess ->
@@ -135,14 +137,15 @@ class ScanFragment : Fragment() {
         }
     }
 
-    private fun scanImage() {
-        Toast.makeText(context, "Fitur ini belum tersedia", Toast.LENGTH_SHORT).show()
-    }
-
     private fun showImage() {
-        currentImageUri.let {
-            Log.d("Image URI", "showImage: $it")
-            binding.previewImageView.setImageURI(it)
+        currentImageUri.let { uri ->
+            Log.d("Image URI", "showImage: $uri")
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                binding.previewImageView.setImageURI(uri)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
     }
 

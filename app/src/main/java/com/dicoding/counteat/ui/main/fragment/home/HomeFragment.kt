@@ -16,8 +16,6 @@ class HomeFragment : Fragment() {
         ViewModelFactory.getInstance(this)
     }
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding ?: throw IllegalStateException("Binding cannot be null after onCreateView")
 
     override fun onCreateView(
@@ -25,25 +23,11 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-       /* val username = EXTRA_USERNAME
-        viewModel.findUser(username, bmr)
-        viewModel.bmrUser.observe(viewLifecycleOwner) { item ->
-            item?.let {
-                binding.tvCal = it.bmr
-            }
-        }*/
-
         return root
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

@@ -99,9 +99,9 @@ class AppRepository private constructor(
     }*/
 
     /*private val _bmr = MutableLiveData<BMRResponse>()
-    val bmr: LiveData<BMRResponse> = _bmr*/
+    val bmr: LiveData<BMRResponse> = _bmr
 
-    /*fun getBmr(username: String, getBmr: String) = liveData {
+    fun getBmr(username: String, getBmr: String) = liveData {
         emit(State.Loading)
         try {
             val request = getUserBmr(bmr = getBmr)

@@ -14,7 +14,7 @@
     <string name="profile">Profile</string>
     <string name="update_profile">Update profilemu</string>
 
-    <string name="predict">Prediksi</string>
+    <string name="history">Riwayat makanan hari ini</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
